@@ -8,7 +8,7 @@
   "featured": [],
   "plugins": [
     {
-      "id": "Arkmusn/paseo-market",
+      "id": "Arkmusn/paseo-plugin-management",
       "name": "插件市场",
       "description": "聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件",
       "categories": [
@@ -19,19 +19,19 @@
         "github": "Arkmusn"
       },
       "repository": {
-        "url": "https://github.com/Arkmusn/paseo-market",
-        "commit": "c1e349914307a3d58e59d86deba30384bf84b0a8"
+        "url": "https://github.com/Arkmusn/paseo-plugin-management",
+        "commit": "4b6caaa54080a1f007dfb32e334a4aa4a0a8eca2"
       },
       "artifact": {
         "kind": "git",
-        "remote": "git:Arkmusn/paseo-market",
-        "commit": "c1e349914307a3d58e59d86deba30384bf84b0a8"
+        "remote": "git:Arkmusn/paseo-plugin-management",
+        "commit": "4b6caaa54080a1f007dfb32e334a4aa4a0a8eca2"
       },
       "media": [],
       "installs": 0,
       "publishedAt": "2026-10-19T06:06:30.030Z",
-      "updatedAt": "2026-10-19T10:00:51.427Z"
+      "updatedAt": "2026-10-19T10:02:21.025Z"
     }
   ],
-  "generatedAt": "2026-10-19T10:00:51.427Z"
+  "generatedAt": "2026-10-19T10:02:21.025Z"
 }

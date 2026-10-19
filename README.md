@@ -10,7 +10,7 @@ plugins/<id>.json              每个插件的详情（README），按 <owner>/<
 ```
 
 本仓只放**目录数据**，不放插件源码。「插件市场」的源码在
-<https://github.com/Arkmusn/paseo-market>，目录条目通过 `git:` 产物指向它。
+<https://github.com/Arkmusn/paseo-plugin-management>，目录条目通过 `git:` 产物指向它。
 
 ## 作为市场源加入
 
@@ -25,7 +25,7 @@ plugins/<id>.json              每个插件的详情（README），按 <owner>/<
 
 | id | 名称 | 说明 |
 | --- | --- | --- |
-| `Arkmusn/paseo-market` | 插件市场 | 聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件（源码在 <https://github.com/Arkmusn/paseo-market>） |
+| `Arkmusn/paseo-plugin-management` | 插件市场 | 聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件（源码在 <https://github.com/Arkmusn/paseo-plugin-management>） |
 
 ## 新增插件
 
@@ -45,4 +45,4 @@ plugins/<id>.json              每个插件的详情（README），按 <owner>/<
 
 ## 许可
 
-`plugins/paseo-market/` 是 Paseo Cafe（<https://github.com/paseo-cafe/paseo-cafe>）的修改版分支，采用 Apache License 2.0；改动说明见 `plugins/paseo-market/NOTICE`。
+「插件市场」的源码仓库 <https://github.com/Arkmusn/paseo-plugin-management> 是 Paseo Cafe（<https://github.com/paseo-cafe/paseo-cafe>）的修改版分支，采用 Apache License 2.0；改动说明见该仓库的 `NOTICE`。
