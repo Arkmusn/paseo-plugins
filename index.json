@@ -30,8 +30,9 @@
       "media": [],
       "installs": 0,
       "publishedAt": "2026-10-19T06:06:30.030Z",
-      "updatedAt": "2026-10-19T10:59:11.563Z"
+      "updatedAt": "2026-10-19T10:59:55.231Z",
+      "icon": "https://raw.githubusercontent.com/Arkmusn/paseo-plugin-management/HEAD/assets/icon.png"
     }
   ],
-  "generatedAt": "2026-10-19T10:59:11.563Z"
+  "generatedAt": "2026-10-19T10:59:55.231Z"
 }
