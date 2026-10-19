@@ -20,18 +20,18 @@
       },
       "repository": {
         "url": "https://github.com/Arkmusn/paseo-plugin-management",
-        "commit": "880daa9b28dd5c0b6ddfd2902b4f7fc29468ef66"
+        "commit": "9bc2bd82cc7101d6b6b596390e92159ba03fb503"
       },
       "artifact": {
         "kind": "git",
         "remote": "git:Arkmusn/paseo-plugin-management",
-        "commit": "880daa9b28dd5c0b6ddfd2902b4f7fc29468ef66"
+        "commit": "9bc2bd82cc7101d6b6b596390e92159ba03fb503"
       },
       "media": [],
       "installs": 0,
       "publishedAt": "2026-10-19T06:06:30.030Z",
-      "updatedAt": "2026-10-19T10:11:42.617Z"
+      "updatedAt": "2026-10-19T10:59:11.563Z"
     }
   ],
-  "generatedAt": "2026-10-19T10:11:42.617Z"
+  "generatedAt": "2026-10-19T10:59:11.563Z"
 }
