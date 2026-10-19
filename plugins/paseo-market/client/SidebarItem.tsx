@@ -11,7 +11,8 @@ import { UPDATE_STATUS_QUERY_KEY } from "./update-status"
 import { radius } from "./visual"
 
 export const DIRECTORY_SCREEN_ID = "directory"
-export const INSTALLED_SCREEN_ID = "installed"
+/** Screen param that opens the shared screen on the installed list. */
+export const INSTALLED_VIEW_PARAM = "view"
 
 // The check runs `paseo plugin update --all --check` on the daemon, and this
 // item mounts on every app launch, so look less often than the surface does.
@@ -58,7 +59,12 @@ function UpdateBadge({
   )
 }
 
-export function DirectorySidebarItem({
+/**
+ * One sidebar item covers the whole plugin: the market screen links to the
+ * installed list, so the row stays active on either screen and keeps carrying
+ * the update badge.
+ */
+export function PluginsSidebarItem({
   theme,
   currentScreen,
   openScreen,
@@ -82,19 +88,6 @@ export function DirectorySidebarItem({
           <UpdateBadge count={count} theme={theme} />
         ) : null
       }
-    />
-  )
-}
-
-export function InstalledSidebarItem({
-  currentScreen,
-  openScreen,
-}: PluginSidebarItemProps) {
-  return (
-    <SidebarRow
-      icon="PackageCheck"
-      active={currentScreen?.screenId === INSTALLED_SCREEN_ID}
-      onPress={() => openScreen({ screenId: INSTALLED_SCREEN_ID })}
     />
   )
 }

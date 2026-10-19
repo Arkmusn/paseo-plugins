@@ -98,7 +98,14 @@ function Action({
   )
 }
 
-export function InstalledSurface({ theme, layout }: PluginSurfaceProps) {
+export function InstalledSurface({
+  theme,
+  layout,
+  onShowMarket,
+}: PluginSurfaceProps & {
+  /** Switches the shared screen back to the market. */
+  onShowMarket?: () => void
+}) {
   const listDirectory = useRpc(directoryListRpc)
   const listUpdateStatus = useRpc(directoryUpdateStatusRpc)
   const uninstall = useRpc(directoryUninstallRpc)
@@ -177,16 +184,22 @@ export function InstalledSurface({ theme, layout }: PluginSurfaceProps) {
         keyExtractor={(item) => item.id}
         contentContainerStyle={{ gap: space.sm, paddingBottom: 24 }}
         ListHeaderComponent={
-          <Text
-            style={{
-              color: theme.colors.foregroundMuted,
-              fontSize: 12,
-              paddingBottom: space.sm,
-            }}
-          >
-            {installations.length} installed
-            {updateCount > 0 ? ` · ${updateCount} update${updateCount === 1 ? "" : "s"} available` : ""}
-          </Text>
+          <View style={{ gap: space.sm, paddingBottom: space.sm }}>
+            <Text role="heading" aria-level={1} style={{ color: theme.colors.foreground, fontSize: 20, lineHeight: 28, fontWeight: "600" }}>
+              Installed plugins
+            </Text>
+            <View style={{ flexDirection: "row", alignItems: "center", gap: space.sm, flexWrap: "wrap" }}>
+              <Action
+                label="Browse the plugin market"
+                theme={theme}
+                onPress={() => onShowMarket?.()}
+              />
+              <Text style={{ color: theme.colors.foregroundMuted, fontSize: 12 }}>
+                {installations.length} installed
+                {updateCount > 0 ? ` · ${updateCount} update${updateCount === 1 ? "" : "s"} available` : ""}
+              </Text>
+            </View>
+          </View>
         }
         ListEmptyComponent={
           <Text

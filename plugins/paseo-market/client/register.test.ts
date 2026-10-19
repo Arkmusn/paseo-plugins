@@ -1,13 +1,11 @@
 import type { PluginClientContext } from "@getpaseo/plugin/client"
 import { describe, expect, it, vi } from "vitest"
 
-vi.mock("./DirectorySurface", () => ({ DirectorySurface: () => null }))
-vi.mock("./InstalledSurface", () => ({ InstalledSurface: () => null }))
+vi.mock("./PluginsSurface", () => ({ PluginsSurface: () => null }))
 vi.mock("./SidebarItem", () => ({
   DIRECTORY_SCREEN_ID: "directory",
-  INSTALLED_SCREEN_ID: "installed",
-  DirectorySidebarItem: () => null,
-  InstalledSidebarItem: () => null,
+  INSTALLED_VIEW_PARAM: "view",
+  PluginsSidebarItem: () => null,
 }))
 
 import { registerDirectory } from "./register"
@@ -25,25 +23,16 @@ function fakeClient() {
 }
 
 describe("registerDirectory", () => {
-  it("registers the market screen and a sidebar header item that can carry the badge", () => {
+  it("registers one Plugins screen and one sidebar item that can carry the badge", () => {
     const { client, addScreen, addSidebarHeaderItem } = fakeClient()
     registerDirectory(client)
+    expect(addScreen).toHaveBeenCalledTimes(1)
     expect(addScreen).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "directory", title: "Plugin market" })
+      expect.objectContaining({ id: "directory", title: "Plugins" })
     )
+    expect(addSidebarHeaderItem).toHaveBeenCalledTimes(1)
     expect(addSidebarHeaderItem).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "directory", title: "Plugin market" })
-    )
-  })
-
-  it("registers the installed plugins screen and its sidebar item", () => {
-    const { client, addScreen, addSidebarHeaderItem } = fakeClient()
-    registerDirectory(client)
-    expect(addScreen).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "installed", title: "Installed plugins" })
-    )
-    expect(addSidebarHeaderItem).toHaveBeenCalledWith(
-      expect.objectContaining({ id: "installed", title: "Installed plugins" })
+      expect.objectContaining({ id: "directory", title: "Plugins" })
     )
   })
 
@@ -58,7 +47,7 @@ describe("registerDirectory", () => {
     expect(openScreen).toHaveBeenCalledWith({ screenId: "directory" })
   })
 
-  it("opens the installed screen from the command center", () => {
+  it("opens the same screen on the installed list from the command center", () => {
     const { client, addCommandCenterItem } = fakeClient()
     registerDirectory(client)
     const [{ onSelect }] = addCommandCenterItem.mock.calls[1] as [
@@ -66,6 +55,9 @@ describe("registerDirectory", () => {
     ]
     const openScreen = vi.fn()
     onSelect({ openScreen })
-    expect(openScreen).toHaveBeenCalledWith({ screenId: "installed" })
+    expect(openScreen).toHaveBeenCalledWith({
+      screenId: "directory",
+      params: { view: "installed" },
+    })
   })
 })

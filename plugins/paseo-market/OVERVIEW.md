@@ -1,4 +1,4 @@
-Plugin market is a screen inside Paseo for browsing several plugin directories at once and managing the plugins you installed from them. A sidebar item opens the market, where you can search, filter by source, category and install state, switch between plugins and themes, and open any listing to read its overview, see its screenshots and review exactly which artifact it would install. A second sidebar item opens the list of installed plugins.
+Plugin market is a screen inside Paseo for browsing several plugin directories at once and managing the plugins you installed from them. A single sidebar item, Plugins, opens the screen, where you can search, filter by source, category and install state, switch between plugins and themes, and open any listing to read its overview, see its screenshots and review exactly which artifact it would install. A button in the header switches to the installed list, and the installed list has a button back to the market.
 
 Themes have their own tab, shown as a grid of screenshots. Plugins show an icon, a short description, the author and the install count reported by the directory, with a badge when you already have them installed or an update is waiting. Each listing is tagged with the source it came from, so plugins with the same name from different sources stay distinct.
 
@@ -27,7 +27,7 @@ Plugin market needs Paseo 0.11.0-beta.4 or later and the `paseo` command on the 
 
 - Automatic updates are on by default for every installed plugin, including Plugin market. The daemon checks 30 seconds after it starts and then every six hours, moves each plugin to its current directory pin, or to the latest release of the npm package or Git source it was installed from, and keeps going if one plugin fails. Turn them off for a single plugin from its detail page, or run the check immediately from Plugin market's settings.
 - The market sidebar item shows the number of plugins with an update available.
-- The installed plugins screen lists everything you installed, with enable, disable, reload, update and uninstall actions and the state each plugin reported.
+- The installed view lists everything you installed, with enable, disable, reload, update and uninstall actions and the state each plugin reported.
 - A composer attachment source lets you attach a plugin's listing to a prompt, so an agent can review it before you install.
 - Plugin market stores your sources, your last search and filters, the list of plugins excluded from automatic updates and the plugins you disabled in its Paseo settings. It contacts only the sources you enabled; installs and updates fetch the artifact from npm or Git the way the `paseo` command normally does.
 - Plugins installed from npm or Git before the directory existed are recognized by package name or repository, and shown as installed when they match a listing.

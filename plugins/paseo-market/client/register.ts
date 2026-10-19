@@ -1,41 +1,29 @@
 import type { PluginClientContext } from "@getpaseo/plugin/client"
-import { DirectorySurface } from "./DirectorySurface"
-import { InstalledSurface } from "./InstalledSurface"
+import { PluginsSurface } from "./PluginsSurface"
 import {
   DIRECTORY_SCREEN_ID,
-  DirectorySidebarItem,
-  INSTALLED_SCREEN_ID,
-  InstalledSidebarItem,
+  INSTALLED_VIEW_PARAM,
+  PluginsSidebarItem,
 } from "./SidebarItem"
 
-const MARKET_TITLE = "Plugin market"
-const INSTALLED_TITLE = "Installed plugins"
+const PLUGINS_TITLE = "Plugins"
 
 /**
- * The market is a screen plus a sidebar header item, which carries the update
- * badge. The installed screen manages what is already on this daemon. The
- * directory screen id stays `directory` so saved sidebar order survives.
+ * One screen and one sidebar item for the whole plugin: the market and the
+ * installed list swap inside the screen, and the sidebar item carries the
+ * update badge. The screen id stays `directory` so saved sidebar order
+ * survives.
  */
 export function registerDirectory(client: PluginClientContext): void {
   client.addScreen({
     id: DIRECTORY_SCREEN_ID,
-    title: MARKET_TITLE,
-    Component: DirectorySurface,
+    title: PLUGINS_TITLE,
+    Component: PluginsSurface,
   })
   client.addSidebarHeaderItem({
     id: DIRECTORY_SCREEN_ID,
-    title: MARKET_TITLE,
-    Component: DirectorySidebarItem,
-  })
-  client.addScreen({
-    id: INSTALLED_SCREEN_ID,
-    title: INSTALLED_TITLE,
-    Component: InstalledSurface,
-  })
-  client.addSidebarHeaderItem({
-    id: INSTALLED_SCREEN_ID,
-    title: INSTALLED_TITLE,
-    Component: InstalledSidebarItem,
+    title: PLUGINS_TITLE,
+    Component: PluginsSidebarItem,
   })
   client.addCommandCenterItem({
     id: "open-directory",
@@ -52,7 +40,10 @@ export function registerDirectory(client: PluginClientContext): void {
     icon: "PackageCheck",
     context: "global",
     onSelect(context) {
-      context.openScreen({ screenId: INSTALLED_SCREEN_ID })
+      context.openScreen({
+        screenId: DIRECTORY_SCREEN_ID,
+        params: { [INSTALLED_VIEW_PARAM]: "installed" },
+      })
     },
   })
 }

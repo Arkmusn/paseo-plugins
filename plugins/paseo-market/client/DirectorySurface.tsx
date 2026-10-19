@@ -254,7 +254,14 @@ const SORT_OPTIONS: readonly { value: SortMode; label: string }[] = [
   { value: "a-z", label: "A to Z" },
 ]
 
-export function DirectorySurface({ theme, layout }: PluginSurfaceProps) {
+export function DirectorySurface({
+  theme,
+  layout,
+  onShowInstalled,
+}: PluginSurfaceProps & {
+  /** Switches the shared screen to the installed list. */
+  onShowInstalled?: () => void
+}) {
   const listDirectory = useRpc(directoryListRpc)
   const installPlugin = useRpc(directoryInstallRpc)
   const updatePlugin = useRpc(directoryUpdateRpc)
@@ -1101,6 +1108,18 @@ export function DirectorySurface({ theme, layout }: PluginSurfaceProps) {
           Plugin directory
         </Text>
         <View style={styles.headerActions}>
+          <Pressable
+            accessibilityRole="link"
+            accessibilityLabel="Show installed plugins"
+            style={styles.textAction}
+            onPress={() => onShowInstalled?.()}
+          >
+            <Text style={styles.textActionText}>
+              {installations.length > 0
+                ? `Installed ${installations.length}`
+                : "Installed"}
+            </Text>
+          </Pressable>
           <Pressable
             accessibilityRole="link"
             accessibilityLabel="Submit a plugin"
