@@ -1,38 +1,38 @@
-# 插件市场
+Plugin market is a screen inside Paseo for browsing several plugin directories at once and managing the plugins you installed from them. A sidebar item opens the market, where you can search, filter by source, category and install state, switch between plugins and themes, and open any listing to read its overview, see its screenshots and review exactly which artifact it would install. A second sidebar item opens the list of installed plugins.
 
-在 Paseo 内统一管理多个插件市场源，集中浏览、安装、卸载、启停、重载与更新插件，无需离开应用或手敲 CLI。
+Themes have their own tab, shown as a grid of screenshots. Plugins show an icon, a short description, the author and the install count reported by the directory, with a badge when you already have them installed or an update is waiting. Each listing is tagged with the source it came from, so plugins with the same name from different sources stay distinct.
 
-## 它做什么
+## Sources
 
-插件市场把若干「市场源」聚合成一个可搜索、可筛选的列表，并在后台调用本机 daemon 的 `paseo` CLI 完成真正的安装与卸载。它同时提供「已装插件」页面，用来启停、重载、卸载与更新已安装的插件。
+The market aggregates any number of sources into one list. Two are built in and enabled by default:
 
-与只对接单个官方目录的方案不同，本插件支持同时启用多个源，并按源标注条目来源，便于在同名插件之间区分。
+- **Paseo registry** — `https://plugins.paseo.sh`, the official Paseo registry protocol v1 (`index.json`). Listings install as `owner/slug`.
+- **Paseo Cafe** — `https://paseo.cafe`, the Cafe directory API (`api/plugins`). Listings install from the npm package or Git repository they declare.
 
-## 内置市场源
+You can add your own sources in Settings, under Plugins and then Plugin market. A custom source can be either kind, or let the market auto-detect the shape from what it fetches. Every source must use HTTPS, or HTTP on localhost. The directory entry for a plugin decides what gets installed, so only use a source you trust. For a source the daemon cannot install from directly, such as one served under a path prefix, the market shows the command to run yourself instead of an install button.
 
-- **Paseo 官方**：`https://plugins.paseo.sh`，使用 Paseo 注册表协议 v1（`index.json` 与 `plugins/<owner>/<slug>.json`）。安装来源为 `owner/slug`。
-- **Paseo Cafe**：`https://paseo.cafe`，使用 paseo.cafe 目录 API（`api/plugins` 与 `api/plugin/<id>.json`）。按条目声明的 npm 包或 Git 仓库安装。
+If a source cannot be reached, the market keeps showing the listings from the sources that did load and reports the failure for that source.
 
-两者默认启用，可单独关闭。还可以添加自定义 JSON 源：插件会自动识别注册表协议或 Cafe 目录形状，也接受裸数组。
+## How it works
 
-## 使用方式
+The daemon downloads each enabled source and caches it for five minutes. A listing's overview is fetched from the same source when you open it. Screenshots and icons are loaded by your Paseo app straight from the URLs each listing declares, which are usually GitHub or a package CDN, so those hosts see your request.
 
-- 侧边栏「插件市场」：搜索、按源/分类/状态筛选、排序，查看条目详情（说明文档、截图、安装锚点与注意事项），并安装或卸载。
-- 「直接安装」：目录里没有的来源，可直接粘贴 `owner/slug`、`host/owner/slug`、`git:owner/repo`、`npm:包@版本`、HTTPS Git URL，或绝对目录路径安装，并可选填 Git 引用与仓库内子路径。适合只有单个插件的仓库。
-- 侧边栏「已装插件」：查看已安装插件及其状态与版本，执行启用、禁用、重载、更新、卸载。
-- 设置 → 插件市场：增删改市场源、逐源启用或停用、测试源连通性、恢复内置源。
+Installing, updating, enabling, disabling, reloading and uninstalling run the `paseo` command line on the daemon host. Before an install, the app shows the pinned npm version or Git commit and the repository it comes from, and you confirm. The daemon then installs exactly that reviewed artifact. If the directory moves the pin after you opened the review, the install is refused.
 
-安装前会明确提示该操作会在 daemon 上运行第三方代码，并展示将要执行的 `paseo plugin add` 命令。
+## Setup
 
-## 安全与限制
+Plugin market needs Paseo 0.11.0-beta.4 or later and the `paseo` command on the daemon's path.
 
-插件本身是在 daemon 上运行的受信任、无沙箱代码，可访问该机器的文件、进程与凭据；它通过 `paseo` CLI 安装的插件同样如此。因此请只添加和使用你信任的源。
+## Capabilities and limits
 
-- 源地址必须是 HTTPS，或 localhost 上的 HTTP；抓取拒绝重定向，并有响应体大小上限。
-- 安装按目录中已确认的产物锚点（npm 版本与 integrity，或 Git commit 与子路径）执行；若源上的锚点在确认后发生变动，安装会被拒绝。
-- 自定义注册表源的安装：优先按 daemon 能解析的 `owner/slug`（仅默认注册表，或托管在 HTTPS 主机根路径下的源），否则回退到条目自带的 npm/Git 产物直接安装。两者皆无的条目标记为「不可安装」。
-- 市场源聚合与安装依赖 daemon 机器上可用的 `paseo` CLI；若不可用，插件会在日志中给出提示，相关操作会失败。
+- Automatic updates are on by default for every installed plugin, including Plugin market. The daemon checks 30 seconds after it starts and then every six hours, moves each plugin to its current directory pin, or to the latest release of the npm package or Git source it was installed from, and keeps going if one plugin fails. Turn them off for a single plugin from its detail page, or run the check immediately from Plugin market's settings.
+- The market sidebar item shows the number of plugins with an update available.
+- The installed plugins screen lists everything you installed, with enable, disable, reload, update and uninstall actions and the state each plugin reported.
+- A composer attachment source lets you attach a plugin's listing to a prompt, so an agent can review it before you install.
+- Plugin market stores your sources, your last search and filters, the list of plugins excluded from automatic updates and the plugins you disabled in its Paseo settings. It contacts only the sources you enabled; installs and updates fetch the artifact from npm or Git the way the `paseo` command normally does.
+- Plugins installed from npm or Git before the directory existed are recognized by package name or repository, and shown as installed when they match a listing.
+- Listed plugins are community submissions. They still run unsandboxed on your daemon host, so read a plugin's source before installing it.
 
-## 版本要求
+## Fork
 
-需要 Paseo 0.11.4 或更高版本。
+Plugin market is a modified fork of Paseo Cafe, licensed under the Apache License, Version 2.0. See `NOTICE` for the changes made in this fork.

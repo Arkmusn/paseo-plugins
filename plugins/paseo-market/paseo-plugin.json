@@ -1,9 +1,9 @@
 {
   "id": "paseo-market",
-  "name": "插件市场",
-  "description": "聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件",
+  "name": "Plugin market",
+  "description": "Multi-source Paseo plugin market: browse, install, uninstall, enable, disable, reload and update plugins",
   "media": [],
   "requirements": {
-    "paseo": ">=0.11.4"
+    "paseo": ">=0.11.0-beta.4"
   }
 }
