@@ -20,19 +20,19 @@
       },
       "repository": {
         "url": "https://github.com/Arkmusn/paseo-plugins/tree/main/plugins/paseo-market",
-        "commit": "da4d317eb61f4f982c1eb299fe734bdf02b60074"
+        "commit": "a7dd603bb16f6ac9477d6df9b26e15f0c0c1e0a3"
       },
       "artifact": {
         "kind": "git",
         "remote": "https://github.com/Arkmusn/paseo-plugins.git",
-        "commit": "da4d317eb61f4f982c1eb299fe734bdf02b60074",
+        "commit": "a7dd603bb16f6ac9477d6df9b26e15f0c0c1e0a3",
         "pluginPath": "plugins/paseo-market"
       },
       "media": [],
       "installs": 0,
       "publishedAt": "2026-10-19T06:06:30.030Z",
-      "updatedAt": "2026-10-19T06:06:30.030Z"
+      "updatedAt": "2026-10-19T06:59:34.184Z"
     }
   ],
-  "generatedAt": "2026-10-19T06:06:30.030Z"
+  "generatedAt": "2026-10-19T06:59:34.184Z"
 }
