@@ -1,6 +1,6 @@
 # paseo-plugins
 
-Arkmusn 的 Paseo 插件市场。单仓多插件，并附带一个可被 Paseo「插件市场」直接浏览的目录。
+Arkmusn 的 Paseo 插件市场。单仓多插件，并附带一个可被 Paseo 的 `paseo-plugin-management` 直接浏览的目录。
 
 ## 结构
 
@@ -9,12 +9,12 @@ index.json                     市场目录（Paseo 注册表协议 v1）
 plugins/<id>.json              每个插件的详情（README），按 <owner>/<slug>.json 存放
 ```
 
-本仓只放**目录数据**，不放插件源码。「插件市场」的源码在
+本仓只放**目录数据**，不放插件源码。`paseo-plugin-management` 的源码在
 <https://github.com/Arkmusn/paseo-plugin-management>，目录条目通过 `git:` 产物指向它。
 
 ## 作为市场源加入
 
-在 Paseo 里打开 **设置 → 插件市场**，添加一个源：
+在 Paseo 里打开 **设置 → paseo-plugin-management**，添加一个源：
 
 - 类型：`Paseo 注册表`
 - 源地址：`https://raw.githubusercontent.com/Arkmusn/paseo-plugins/main`
@@ -25,7 +25,7 @@ plugins/<id>.json              每个插件的详情（README），按 <owner>/<
 
 | id | 名称 | 说明 |
 | --- | --- | --- |
-| `Arkmusn/paseo-plugin-management` | 插件市场 | 聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件（源码在 <https://github.com/Arkmusn/paseo-plugin-management>） |
+| `Arkmusn/paseo-plugin-management` | paseo-plugin-management | 聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件（源码在 <https://github.com/Arkmusn/paseo-plugin-management>） |
 
 ## 新增插件
 
@@ -41,8 +41,8 @@ plugins/<id>.json              每个插件的详情（README），按 <owner>/<
 
 ## 版本要求
 
-插件市场需要 Paseo 0.11.4 或更高版本。
+paseo-plugin-management 需要 Paseo 0.11.4 或更高版本。
 
 ## 许可
 
-「插件市场」的源码仓库 <https://github.com/Arkmusn/paseo-plugin-management> 是 Paseo Cafe（<https://github.com/paseo-cafe/paseo-cafe>）的修改版分支，采用 Apache License 2.0；改动说明见该仓库的 `NOTICE`。
+`paseo-plugin-management` 的源码仓库 <https://github.com/Arkmusn/paseo-plugin-management> 是 Paseo Cafe（<https://github.com/paseo-cafe/paseo-cafe>）的修改版分支，采用 Apache License 2.0；改动说明见该仓库的 `NOTICE`。
