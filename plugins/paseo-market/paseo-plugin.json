@@ -1,9 +1,0 @@
-{
-  "id": "paseo-market",
-  "name": "Plugin market",
-  "description": "Multi-source Paseo plugin market: browse, install, uninstall, enable, disable, reload and update plugins",
-  "media": [],
-  "requirements": {
-    "paseo": ">=0.11.0-beta.4"
-  }
-}

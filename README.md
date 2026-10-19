@@ -7,8 +7,10 @@ Arkmusn 的 Paseo 插件市场。单仓多插件，并附带一个可被 Paseo�
 ```
 index.json                     市场目录（Paseo 注册表协议 v1）
 plugins/<id>.json              每个插件的详情（README），按 <owner>/<slug>.json 存放
-plugins/paseo-market/          插件「插件市场」的源码
 ```
+
+本仓只放**目录数据**，不放插件源码。「插件市场」的源码在
+<https://github.com/Arkmusn/paseo-market>，目录条目通过 `git:` 产物指向它。
 
 ## 作为市场源加入
 
@@ -23,15 +25,15 @@ plugins/paseo-market/          插件「插件市场」的源码
 
 | id | 名称 | 说明 |
 | --- | --- | --- |
-| `Arkmusn/paseo-market` | 插件市场 | 聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件 |
+| `Arkmusn/paseo-market` | 插件市场 | 聚合多个 Paseo 插件市场源，统一浏览、安装、卸载、启停与更新插件（源码在 <https://github.com/Arkmusn/paseo-market>） |
 
 ## 新增插件
 
-1. 把插件源码放到 `plugins/<插件-id>/`。
-2. 在 `index.json` 的 `plugins` 数组里加一条，`artifact.kind` 为 `git`，写清 `remote`、`commit` 与 `pluginPath`。
+1. 插件源码放在它自己的仓库里（插件根目录即仓库根，不需要 `pluginPath`）。
+2. 在 `index.json` 的 `plugins` 数组里加一条，`artifact.kind` 为 `git`，写清 `remote` 与 `commit`；`remote` 用 `git:owner/repo` 或仓库 URL。
 3. 在 `plugins/Arkmusn/<插件-id>.json` 放该插件的 README（`{"id": "...", "readme": "..."}`）。
 
-安装锚点使用固定 commit，便于复现；`paseo plugin update <id>` 会跟踪默认分支 HEAD。
+安装锚点使用固定 commit，便于复现；之后的 `paseo plugin update <id>` 会解析远端默认分支 HEAD 作为目标，所以锚点只约束安装那一刻。
 
 ## 安全
 
