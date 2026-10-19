@@ -303,9 +303,13 @@ function InstalledRow({
       <View style={{ flexDirection: "row", gap: space.sm, flexWrap: "wrap" }}>
         <Action label={item.enabled ? "Disable" : "Enable"} theme={theme} onPress={onToggle} disabled={busy} />
         <Action label="Reload" theme={theme} onPress={onReload} disabled={busy} />
-        {hasUpdate ? (
-          <Action label="Update" theme={theme} tone="accent" onPress={onUpdate} disabled={busy} />
-        ) : null}
+        <Action
+          label="Update"
+          theme={theme}
+          tone={hasUpdate ? "accent" : "neutral"}
+          onPress={onUpdate}
+          disabled={busy}
+        />
         <Action label="Uninstall" theme={theme} tone="danger" onPress={onUninstall} disabled={busy} />
       </View>
     </View>

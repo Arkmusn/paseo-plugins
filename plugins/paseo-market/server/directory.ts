@@ -1073,6 +1073,24 @@ const updateResultSchema = z.array(
   })
 )
 
+/**
+ * Why there is nothing to update, or undefined when the outcome is not a
+ * no-op. A local directory install never has anything to download, so it is
+ * reported like the already-current cases instead of as a failure.
+ */
+export function noUpdateMessage(
+  installationId: string,
+  outcome: string
+): string | undefined {
+  if (outcome === "current" || outcome === "installed-newer") {
+    return `${installationId} is already up to date.`
+  }
+  if (outcome === "local") {
+    return `${installationId} is installed from a local directory, so there is nothing to download.`
+  }
+  return undefined
+}
+
 export function parseUpdateResult(
   stdout: string,
   installationId: string
@@ -1082,30 +1100,26 @@ export function parseUpdateResult(
     return { ok: false, message: `No update result for ${installationId}.` }
   }
   const warning = result.warning ? ` ${result.warning}` : ""
-  switch (result.outcome) {
-    case "updated":
-      return {
-        ok: true,
-        updated: true,
-        message: `Updated ${installationId}.${warning}`,
-      }
-    case "current":
-    case "installed-newer":
-      return {
-        ok: true,
-        updated: false,
-        message: `${installationId} is already up to date.`,
-      }
-    case "error":
-      return {
-        ok: false,
-        message: result.error ?? `Update failed for ${installationId}.`,
-      }
-    default:
-      return {
-        ok: false,
-        message: `Update result for ${installationId} is ${result.outcome}.`,
-      }
+  if (result.outcome === "updated") {
+    return {
+      ok: true,
+      updated: true,
+      message: `Updated ${installationId}.${warning}`,
+    }
+  }
+  const noUpdate = noUpdateMessage(installationId, result.outcome)
+  if (noUpdate) {
+    return { ok: true, updated: false, message: `${noUpdate}${warning}` }
+  }
+  if (result.outcome === "error") {
+    return {
+      ok: false,
+      message: result.error ?? `Update failed for ${installationId}.`,
+    }
+  }
+  return {
+    ok: false,
+    message: `Update result for ${installationId} is ${result.outcome}.`,
   }
 }
 
@@ -1139,10 +1153,20 @@ export async function updateDirectoryPlugin(
 ): Promise<RpcOutput<typeof directoryUpdateRpc>> {
   const args = ["plugin", "update", input.installationId, "--yes", "--json"]
   return serializePluginUpdate(input.installationId, async () => {
-    updateStatusCache = undefined
     // This plugin's own process is stopped by its update, so the result cannot
-    // be awaited: run the CLI detached and let the surface reconnect.
+    // be awaited: run the CLI detached and let the surface reconnect. When the
+    // cached check already says there is nothing to fetch, report that instead
+    // of restarting for no reason.
     if (input.installationId === SELF_INSTALLATION_ID) {
+      const status = await fetchUpdateStatus().catch(() => null)
+      const outcome = status?.find(
+        (update) => update.id === SELF_INSTALLATION_ID
+      )?.outcome
+      const nothingToDo = outcome
+        ? noUpdateMessage(SELF_INSTALLATION_ID, outcome)
+        : undefined
+      if (nothingToDo) return { ok: true, updated: false, message: nothingToDo }
+      updateStatusCache = undefined
       try {
         await startUpdate(args)
       } catch (error) {
@@ -1154,6 +1178,7 @@ export async function updateDirectoryPlugin(
         message: "Updating Plugin market. It restarts when the update finishes.",
       }
     }
+    updateStatusCache = undefined
     try {
       const { stdout } = await runPaseo(args, 120_000)
       return parseUpdateResult(stdout, input.installationId)
