@@ -20,22 +20,22 @@
       },
       "repository": {
         "url": "https://github.com/Arkmusn/paseo-plugin-management",
-        "commit": "2ba8eb6c22421b0d0aeabcc842876ae781278e5c"
+        "commit": "b815f44eb4f444b65efd3b8b6d9533a0080ed0e1"
       },
       "artifact": {
         "kind": "git",
         "remote": "git:Arkmusn/paseo-plugin-management",
-        "commit": "2ba8eb6c22421b0d0aeabcc842876ae781278e5c"
+        "commit": "b815f44eb4f444b65efd3b8b6d9533a0080ed0e1"
       },
       "media": [
-        "https://raw.githubusercontent.com/Arkmusn/paseo-plugin-management/2ba8eb6c22421b0d0aeabcc842876ae781278e5c/assets/market.png",
-        "https://raw.githubusercontent.com/Arkmusn/paseo-plugin-management/2ba8eb6c22421b0d0aeabcc842876ae781278e5c/assets/installed.png"
+        "https://raw.githubusercontent.com/Arkmusn/paseo-plugin-management/b815f44eb4f444b65efd3b8b6d9533a0080ed0e1/assets/market.png",
+        "https://raw.githubusercontent.com/Arkmusn/paseo-plugin-management/b815f44eb4f444b65efd3b8b6d9533a0080ed0e1/assets/installed.png"
       ],
       "installs": 0,
       "publishedAt": "2026-10-19T06:06:30.030Z",
-      "updatedAt": "2026-10-23T03:40:01.673Z",
-      "icon": "https://raw.githubusercontent.com/Arkmusn/paseo-plugin-management/2ba8eb6c22421b0d0aeabcc842876ae781278e5c/assets/icon.png"
+      "updatedAt": "2026-10-23T06:22:57.291Z",
+      "icon": "https://raw.githubusercontent.com/Arkmusn/paseo-plugin-management/b815f44eb4f444b65efd3b8b6d9533a0080ed0e1/assets/icon.png"
     }
   ],
-  "generatedAt": "2026-10-23T03:40:01.673Z"
+  "generatedAt": "2026-10-23T06:22:57.291Z"
 }
